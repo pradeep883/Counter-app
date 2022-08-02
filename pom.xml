@@ -10,12 +10,12 @@
 		<version>2.4.5</version>
 	</parent>
 
-	<groupId>com.example</groupId>
-	<artifactId>hello-world</artifactId>
+	<groupId>counter.app</groupId>
+	<artifactId>counter-app</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 
-	<name>hello-world</name>
-	<description>A simple Spring Boot app to send hello world message to a user</description>
+	<name>counter-app</name>
+	<description>A simple Spring Boot thread counter </description>
 
 	<properties>
 		<java.version>1.8</java.version>
