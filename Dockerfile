@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 EXPOSE 8080
 ARG JAR_FILE
-ADD target/hello-world-1.0.1-SNAPSHOT.jar app.jar
+ADD target/counter-app-1.0.1-SNAPSHOT.jar app.jar
 
 ENV JAR_OPTS=""
 ENV JAVA_OPTS=""
