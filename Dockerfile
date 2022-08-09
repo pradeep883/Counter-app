@@ -1,6 +1,8 @@
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 EXPOSE 8080
+
+RUN mvn clean install
 ARG JAR_FILE
 ADD target/counter-app-1.0.1-SNAPSHOT.jar app.jar
 
