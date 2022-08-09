@@ -2,6 +2,7 @@ FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 EXPOSE 8080
 
+RUN sudo apt install curl
 
 # Downloading and installing Maven
 # 1- Define a constant with the version of maven you want to install
