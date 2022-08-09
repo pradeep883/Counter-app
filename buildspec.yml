@@ -19,7 +19,7 @@ phases:
       - echo Pushing the Docker images...    
       - docker push 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest
       - echo Writing image definitions file...      
-      - printf '[{"name":"my-app-and-datadog","imageUri":"%s"}]' 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest > imagedefinitions.json
+      - printf '[{"name":"counter-app","imageUri":"%s"}]' 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest > imagedefinitions.json
       - cat imagedefinitions.json      
 artifacts:
   files: 
