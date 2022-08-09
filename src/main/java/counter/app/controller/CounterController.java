@@ -49,20 +49,20 @@ public class CounterController {
 
     Thread run = new Thread(myThread);
     run.start();
-    return "task started again";
+    return "task started again and agian";
   }
 
   @GetMapping("/stop")
   public String stopTask() {
     logger.info("stopping task.....a");
     started = false;
-    return "stoping task...";
+    return "stopping task...";
   }
 
   @GetMapping("/setInterval")
   public String setInterval(@RequestParam long interval) {
     logger.info("setting interval...{}", interval);
-    this.interval = interval;
+    CounterController.interval = interval;
     return "new interval set";
   }
 
