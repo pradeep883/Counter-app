@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 459074096472.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - mvn install -DskipTests
+      - docker build -t counter-app .
+      - docker tag counter-app:latest 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest
+  post_build:
+    commands:
+      - docker push 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest
+      - printf '[{"name":"my-app-and-datadog","imageUri":"%s"}]' 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest > imagedefinitions.json
+artifacts:
+  files: 
+      - imagedefinitions.json
+      - target/counter-app-1.0.1-SNAPSHOT.jar
