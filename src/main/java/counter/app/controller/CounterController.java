@@ -49,7 +49,7 @@ public class CounterController {
 
     Thread run = new Thread(myThread);
     run.start();
-    return "task started";
+    return "task started again";
   }
 
   @GetMapping("/stop")
