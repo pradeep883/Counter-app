@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 public class CounterController {
 
   private static final Logger logger = LoggerFactory.getLogger(CounterController.class);
@@ -17,6 +19,15 @@ public class CounterController {
 
   @GetMapping("/start")
   public String startTask() {
+
+    logger.trace("A TRACE Message");
+    logger.debug("A DEBUG Message");
+    logger.info("An INFO Message");
+    logger.warn("A WARN Message");
+    logger.error("An ERROR Message");
+
+    log.info("i am from slf4j2");
+
 
     started = true;
     Runnable myThread = () -> {
