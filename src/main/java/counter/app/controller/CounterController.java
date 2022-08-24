@@ -20,7 +20,6 @@ public class CounterController {
     log.info("An INFO Message");
     log.warn("A WARN Message");
     log.error("An ERROR Message");
-    log.error("An ERROR Message");
     log.info("i am from slf4j2");
 
 
