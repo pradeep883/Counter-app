@@ -3,6 +3,7 @@ package counter.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -70,7 +71,10 @@ public class CounterController {
 
 
   @GetMapping("/header")
-  private ResponseEntity<?> getRequestInformation(@RequestHeader Map<String, String> headers) {
+  private ResponseEntity<?> getRequestInformation(@RequestHeader Map<String, String> headers,
+      HttpEntity<String> httpEntity) {
+
+    String json = httpEntity.getHeaders().get("Authorization").get(0);
 
     List<Object> resultList = new ArrayList<>();
     ModelMap map = new ModelMap();
@@ -78,6 +82,7 @@ public class CounterController {
       map.addAttribute(key, value);
     });
     resultList.add(map);
+    resultList.add(json);
     return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
 }
