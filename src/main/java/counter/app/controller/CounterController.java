@@ -1,9 +1,10 @@
 package counter.app.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +67,44 @@ public class CounterController {
 
 
   @GetMapping("/header")
-  public ResponseEntity<String> greeting(@RequestHeader("Authorization") String headervl) {
-    // code that uses the language variable
-    return new ResponseEntity<String>(headervl, HttpStatus.OK);
+  private Map<String, String> getRequestInformation(HttpServletRequest request) {
+    Map<String, String> map = new HashMap<String, String>();
+    Enumeration headerNames = request.getHeaderNames();
+    while (headerNames.hasMoreElements()) {
+      String key = (String) headerNames.nextElement();
+      String value = request.getHeader(key);
+      map.put("header: " + key, value);
+    }
+    Enumeration parameterNames = request.getParameterNames();
+    while (parameterNames.hasMoreElements()) {
+      String key = (String) parameterNames.nextElement();
+      String value = request.getParameter(key);
+      map.put("parameter: " + key, value);
+    }
+
+    while (parameterNames.hasMoreElements()) {
+      String key = (String) parameterNames.nextElement();
+      String value = request.getParameter(key);
+      map.put("parameter: " + key, value);
+    }
+    map.put("getRemoteUser", request.getRemoteUser());
+    map.put("getMethod", request.getMethod());
+    map.put("getQueryString", request.getQueryString());
+    map.put("getAuthType", request.getAuthType());
+    map.put("getContextPath", request.getContextPath());
+    map.put("getPathInfo", request.getPathInfo());
+    map.put("getPathTranslated", request.getPathTranslated());
+    map.put("getRequestedSessionId", request.getRequestedSessionId());
+    map.put("getRequestURI", request.getRequestURI());
+    map.put("getRequestURL", request.getRequestURL().toString());
+    map.put("getMethod", request.getMethod());
+    map.put("getServletPath", request.getServletPath());
+    map.put("getContentType", request.getContentType());
+    map.put("getLocalName", request.getLocalName());
+    map.put("getProtocol", request.getProtocol());
+    map.put("getRemoteAddr", request.getRemoteAddr());
+    map.put("getServerName", request.getServerName());
+    return map;
   }
 
 }
