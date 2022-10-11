@@ -1,10 +1,13 @@
 package counter.app.controller;
 
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
@@ -67,44 +70,14 @@ public class CounterController {
 
 
   @GetMapping("/header")
-  private Map<String, String> getRequestInformation(HttpServletRequest request) {
-    Map<String, String> map = new HashMap<String, String>();
-    Enumeration headerNames = request.getHeaderNames();
-    while (headerNames.hasMoreElements()) {
-      String key = (String) headerNames.nextElement();
-      String value = request.getHeader(key);
-      map.put("header: " + key, value);
-    }
-    Enumeration parameterNames = request.getParameterNames();
-    while (parameterNames.hasMoreElements()) {
-      String key = (String) parameterNames.nextElement();
-      String value = request.getParameter(key);
-      map.put("parameter: " + key, value);
-    }
+  private ResponseEntity<?> getRequestInformation(@RequestHeader Map<String, String> headers) {
 
-    while (parameterNames.hasMoreElements()) {
-      String key = (String) parameterNames.nextElement();
-      String value = request.getParameter(key);
-      map.put("parameter: " + key, value);
-    }
-    map.put("getRemoteUser", request.getRemoteUser());
-    map.put("getMethod", request.getMethod());
-    map.put("getQueryString", request.getQueryString());
-    map.put("getAuthType", request.getAuthType());
-    map.put("getContextPath", request.getContextPath());
-    map.put("getPathInfo", request.getPathInfo());
-    map.put("getPathTranslated", request.getPathTranslated());
-    map.put("getRequestedSessionId", request.getRequestedSessionId());
-    map.put("getRequestURI", request.getRequestURI());
-    map.put("getRequestURL", request.getRequestURL().toString());
-    map.put("getMethod", request.getMethod());
-    map.put("getServletPath", request.getServletPath());
-    map.put("getContentType", request.getContentType());
-    map.put("getLocalName", request.getLocalName());
-    map.put("getProtocol", request.getProtocol());
-    map.put("getRemoteAddr", request.getRemoteAddr());
-    map.put("getServerName", request.getServerName());
-    return map;
+    List<Object> resultList = new ArrayList<>();
+    ModelMap map = new ModelMap();
+    headers.forEach((key, value) -> {
+      map.addAttribute(key, value);
+    });
+    resultList.add(map);
+    return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
-
 }
