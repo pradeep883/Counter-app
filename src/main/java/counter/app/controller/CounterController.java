@@ -46,7 +46,7 @@ public class CounterController {
 
     Thread run = new Thread(myThread);
     run.start();
-    return "task started again and agian";
+    return "task started";
   }
 
   @GetMapping("/stop")
