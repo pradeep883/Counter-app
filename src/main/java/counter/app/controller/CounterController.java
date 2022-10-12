@@ -1,6 +1,7 @@
 package counter.app.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -89,10 +92,14 @@ public class CounterController {
   }
 
   @GetMapping("/header2")
-  private ResponseEntity<?> getRequestInformation2(HttpServletRequest req) {
+  private ResponseEntity<?> getRequestInformation2(HttpServletRequest servletRequest) {
 
-    String json = req.getParameter("version");
+    List<Object> resultList = new ArrayList<>();
 
-    return new ResponseEntity<>(json, HttpStatus.OK);
+    HttpServletRequest req =
+        ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
+
+    return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
 }
