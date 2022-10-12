@@ -74,7 +74,8 @@ public class CounterController {
   private ResponseEntity<?> getRequestInformation(@RequestHeader Map<String, String> headers,
       HttpEntity<String> httpEntity) {
 
-    String json = httpEntity.getHeaders().get("Authorization").get(0);
+    String json = httpEntity.getHeaders().getFirst("Authorization");
+
 
     List<Object> resultList = new ArrayList<>();
     ModelMap map = new ModelMap();
