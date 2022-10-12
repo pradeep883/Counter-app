@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@CrossOrigin
 public class CounterController {
 
   public static boolean started = true;
@@ -92,10 +94,12 @@ public class CounterController {
   }
 
   @GetMapping("/header2")
-  private ResponseEntity<?> getRequestInformation2(HttpServletRequest servletRequest) {
+  private ResponseEntity<?> getRequestInformation2(HttpServletRequest servletRequest,
+      @RequestHeader(name = "Authorization", required = true) String auth) {
 
     List<Object> resultList = new ArrayList<>();
 
+    log.info(">>>>>>>>>>>>>>>>>: {}", auth);
     HttpServletRequest req =
         ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
