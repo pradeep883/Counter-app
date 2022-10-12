@@ -94,18 +94,12 @@ public class CounterController {
   }
 
   @GetMapping("/header2")
-  private ResponseEntity<?> getRequestInformation2(HttpServletRequest servletRequest,
-      @RequestHeader(name = "Authorization", required = true) String auth) {
+  private ResponseEntity<?> getRequestInformation2(HttpServletRequest servletRequest) {
 
     List<Object> resultList = new ArrayList<>();
-
-    log.info(">>>>>>>>>>>>>>>>>: {}", auth);
     HttpServletRequest req =
         ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
-
-    // resultList.stream().forEach(hdr -> log.info("header : {}", hdr));
-
     return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
 }
