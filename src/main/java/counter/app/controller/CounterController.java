@@ -3,6 +3,7 @@ package counter.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,5 +86,13 @@ public class CounterController {
     resultList.add(map);
     resultList.add(json);
     return new ResponseEntity<>(resultList, HttpStatus.OK);
+  }
+
+  @GetMapping("/header2")
+  private ResponseEntity<?> getRequestInformation2(HttpServletRequest req) {
+
+    String json = req.getParameter("version");
+
+    return new ResponseEntity<>(json, HttpStatus.OK);
   }
 }
