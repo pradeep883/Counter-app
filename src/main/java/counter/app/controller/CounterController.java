@@ -100,6 +100,8 @@ public class CounterController {
         ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
 
+    // resultList.stream().forEach(hdr -> log.info("header : {}", hdr));
+
     return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
 }
