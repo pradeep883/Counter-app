@@ -99,7 +99,7 @@ public class CounterController {
     List<Object> resultList = new ArrayList<>();
     HttpServletRequest req =
         ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-    Collections.list(req.getHeaderNames()).stream().forEach(hdr -> log.info(">>>>>>>>>>>{}", hdr));
+    Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
 
     return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
