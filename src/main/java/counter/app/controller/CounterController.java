@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,5 +103,13 @@ public class CounterController {
     Collections.list(req.getHeaderNames()).stream().forEach(hdr -> resultList.add(hdr));
 
     return new ResponseEntity<>(resultList, HttpStatus.OK);
+  }
+
+
+  @GetMapping("/body")
+  private ResponseEntity<?> getRequestbody(@RequestBody String body) {
+
+    log.info("Body>>>>>>>>>>>>{}", body);
+    return new ResponseEntity<>(body, HttpStatus.OK);
   }
 }
