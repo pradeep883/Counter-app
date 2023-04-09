@@ -1,57 +1,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins
-  namespace: devops-tools
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2023-04-09T14:59:38Z"
+  generation: 1
+  labels:
+    app: counter-app-deployment
+  name: counter-app-deployment
+  namespace: default
+  resourceVersion: "98573"
+  uid: d2ff86ba-77b4-4b63-a669-0477a5a4a491
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: jenkins-server
+      app: counter-app-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: jenkins-server
+        app: counter-app-deployment
     spec:
-      securityContext:
-            fsGroup: 1000 
-            runAsUser: 1000
-      serviceAccountName: jenkins-admin
       containers:
-        - name: jenkins
-          image: jenkins/jenkins:lts
-          resources:
-            limits:
-              memory: "2Gi"
-              cpu: "1000m"
-            requests:
-              memory: "500Mi"
-              cpu: "500m"
-          ports:
-            - name: httpport
-              containerPort: 8080
-            - name: jnlpport
-              containerPort: 50000
-          livenessProbe:
-            httpGet:
-              path: "/login"
-              port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: "/login"
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          volumeMounts:
-            - name: jenkins-data
-              mountPath: /var/jenkins_home         
-      volumes:
-        - name: jenkins-data
-          persistentVolumeClaim:
-              claimName: jenkins-pv-claim
+      - image: 459074096472.dkr.ecr.us-east-1.amazonaws.com/counter-app:latest
+        imagePullPolicy: Always
+        name: counter-app
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  conditions:
+  - lastTransitionTime: "2023-04-09T14:59:39Z"
+    lastUpdateTime: "2023-04-09T14:59:39Z"
+    message: Deployment does not have minimum availability.
+    reason: MinimumReplicasUnavailable
+    status: "False"
+    type: Available
+  - lastTransitionTime: "2023-04-09T14:59:39Z"
+    lastUpdateTime: "2023-04-09T14:59:39Z"
+    message: ReplicaSet "counter-app-deployment-7ff6bdf5f7" is progressing.
+    reason: ReplicaSetUpdated
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  replicas: 1
+  unavailableReplicas: 1
+  updatedReplicas: 1
