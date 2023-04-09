@@ -72,7 +72,7 @@ spec:
   - name: http
     port: 80
     protocol: TCP
-    targetPort: 8085
+    targetPort: 8080
   type: LoadBalancer
   selector:
     app: counter-app
