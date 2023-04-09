@@ -1,6 +1,6 @@
 pipeline {
     tools {
-        maven 'Maven3'
+        maven 'jenkins-mvn'
     }
     agent any
     stages {
