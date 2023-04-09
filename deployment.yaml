@@ -3,14 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2023-04-09T14:59:38Z"
   generation: 1
   labels:
     app: counter-app-deployment
   name: counter-app-deployment
   namespace: default
-  resourceVersion: "98573"
-  uid: d2ff86ba-77b4-4b63-a669-0477a5a4a491
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
